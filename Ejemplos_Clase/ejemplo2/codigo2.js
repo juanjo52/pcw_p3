@@ -9,7 +9,7 @@ function prepararCanvas() {
 }
 
 function ejemplo01() {
-    let cv = document.querySelector('#cv01');
+    let cv = document.querySelector('#cv01'),
         ctx = cv.getContext('2d');
 
         ctx.beginPath();
@@ -36,7 +36,7 @@ function ejemplo01() {
 }
 
 function ejemplo02() {
-    let cv = document.querySelector('#cv01');
+    let cv = document.querySelector('#cv01'),
         ctx = cv.getContext('2d');
 
         ctx.beginPath();
@@ -60,7 +60,7 @@ function ejemplo02() {
 }
 
 function ejemplo03() {
-    let cv = document.querySelector('#cv01');
+    let cv = document.querySelector('#cv01'),
         ctx = cv.getContext('2d');
 
         ctx.beginPath();
@@ -78,7 +78,7 @@ function ejemplo03() {
 }
 
 function ejemplo04() {
-    let cv = document.querySelector('#cv01');
+    let cv = document.querySelector('#cv01'),
         ctx = cv.getContext('2d');
     
     // ctx.globalAlpha = .5;
@@ -86,3 +86,28 @@ function ejemplo04() {
 
     ctx.fillRect(200,200, 100, 80);
 } 
+
+function dibujarTexto() {
+    let cv = document.querySelector('#cv01'),
+        ctx = cv.getContext('2d'),
+        texto = 'Holap Mundo!!!';
+    
+    ctx.fillStyle = '#0a0';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.font = 'italic 32px Sigmar';
+    ctx.fillText(texto, 100,100);
+
+    ctx.beginPath();
+
+    ctx.strokeStyle = '#a00';
+    ctx.lineWidth = 2;
+
+    ctx.moveTo(100, 0);
+    ctx.lineTo(100, cv.height);
+    ctx.moveTo(0, 100);
+    ctx.lineTo(cv.width, 100);
+    
+    ctx.stroke();
+}
