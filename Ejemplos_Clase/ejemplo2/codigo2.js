@@ -6,6 +6,25 @@ function prepararCanvas() {
 
     cv.width = ANCHO;
     cv.height = ALTO;
+
+    ponerEventos();
+}
+
+function ponerEventos() {
+    let cv = document.querySelector('#cv01');
+
+    // cv.addEventListener('mousemove', function(evt){ // Para cuando el ratón esté por encima...
+    cv.addEventListener('click', function(evt){ // Para cuando se pulsa en la celda...
+        let x = evt.offsetX,
+            y = evt.offsetY,
+            altoCelda = ALTO / 3,
+            anchoCelda = ANCHO / 3,
+            fila,col;
+
+        fila = Math.floor(y / altoCelda);
+        col = Math.floor(x / anchoCelda);
+        console.log(`(x,y): (${fila}, ${col})`);
+    });
 }
 
 function ejemplo01() {
