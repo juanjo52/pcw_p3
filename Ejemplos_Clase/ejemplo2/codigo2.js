@@ -66,3 +66,13 @@ function ejemplo03() {
 
     ctx.stroke();
 }
+
+function ejemplo04() {
+    let cv = document.querySelector('#cv01');
+        ctx = cv.getContext('2d');
+    
+    // ctx.globalAlpha = .5;
+    ctx.fillStyle = '#aaa8';
+
+    ctx.fillRect(200,200, 100, 80);
+} 
