@@ -24,6 +24,10 @@ function ejemplo01() {
     ctx.moveTo(200, 300);
     ctx.lineTo(50, 280);
 
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.strokeStyle = '#00a';
     ctx.rect(20, 20, 100, 50); 
 
     ctx.stroke();
