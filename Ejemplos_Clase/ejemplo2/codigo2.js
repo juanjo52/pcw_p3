@@ -33,11 +33,27 @@ function ejemplo02() {
 
     ctx.fillStyle = '#0a0';
     ctx.fillRect(100,100, 200,150);
-    
+
     ctx.strokeStyle = '#00a';
     ctx.lineWidth = 20;
 
     ctx.strokeRect(100,100, 200,150);
 
     
+}
+
+function ejemplo03() {
+    let cv = document.querySelector('#cv01');
+        ctx = cv.getContext('2d');
+    
+    ctx.strokeStyle = '#a0a';
+    ctx.lineWidth = 2;
+
+    ctx.arc(200,200, 100, 0, 3*Math.PI/2, false);
+    //centro del círculo
+    ctx.moveTo(220, 200);
+    ctx.arc(200,200, 20, 0, 2*Math.PI, false);
+
+
+    ctx.stroke();
 }
