@@ -13,7 +13,9 @@ function ejemplo01() {
         ctx = cv.getContext('2d');
     
     ctx.strokeStyle = '#a00';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 6;
+
+    ctx.lineCap = 'round'; //Hacer redondas las puntas de las lines
 
     ctx.moveTo(100, 100);
     ctx.lineTo(200, 150);
@@ -30,6 +32,13 @@ function ejemplo01() {
 function ejemplo02() {
     let cv = document.querySelector('#cv01');
         ctx = cv.getContext('2d');
+
+    // Sombras
+    ctx.shadowOffsetX = 4;
+    ctx.shadowOffsetY = 4;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = '#000';
+
 
     ctx.fillStyle = '#0a0';
     ctx.fillRect(100,100, 200,150);
