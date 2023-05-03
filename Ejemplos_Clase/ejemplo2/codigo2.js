@@ -11,7 +11,9 @@ function prepararCanvas() {
 function ejemplo01() {
     let cv = document.querySelector('#cv01');
         ctx = cv.getContext('2d');
-    
+
+        ctx.beginPath();
+
     ctx.strokeStyle = '#a00';
     ctx.lineWidth = 6;
 
@@ -25,7 +27,7 @@ function ejemplo01() {
     ctx.lineTo(50, 280);
 
     ctx.stroke();
-    
+
     ctx.beginPath();
     ctx.strokeStyle = '#00a';
     ctx.rect(20, 20, 100, 50); 
@@ -36,6 +38,8 @@ function ejemplo01() {
 function ejemplo02() {
     let cv = document.querySelector('#cv01');
         ctx = cv.getContext('2d');
+
+        ctx.beginPath();
 
     // Sombras
     ctx.shadowOffsetX = 4;
@@ -58,6 +62,8 @@ function ejemplo02() {
 function ejemplo03() {
     let cv = document.querySelector('#cv01');
         ctx = cv.getContext('2d');
+
+        ctx.beginPath();
     
     ctx.strokeStyle = '#a0a';
     ctx.lineWidth = 2;
