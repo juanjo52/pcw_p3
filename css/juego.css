@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+}
+
+.left-section {
+    flex: 1;
+    background-color: lightblue;
+    text-align: center;
+  }
+
+  .right-section {
+    flex: 1;
+    background-color: lightgreen;
+    text-align: center;
+  }
+
+hr {
+    margin-top: -20px;
+    margin-bottom: 5px;
+    width: 200px;
+}
+table {
+    border-collapse: collapse;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid black;
+}

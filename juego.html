@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P1</title>
+    <link rel="stylesheet" href="cssfont/fontello.css"> 
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/juego.css">
+    <!-- en css salta advertencia -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani&display=swap');
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Aquí va el logo, el títuloy  el slogan de la página -->
+        <a href="">
+            <img src="./imgs/nano_oliendo.jpg" alt="Imagen de cabecera">
+        </a>
+        <h1>NumTris</h1>
+        <h2>Consigue sumar el mayor número de múltiplos de 5 para ganar</h2>
+    </header>
+
+    <div class="container">
+        <div class="left-section">
+            <h2>Tablero de juego</h2>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Turno</th>
+                        <th>jugador</th>
+                        <th>Puntos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Celda 1,1</td>
+                        <td>Celda 1,2</td>
+                        <td>Celda 1,3</td>
+                    </tr>
+                    <tr>
+                        <td>Celda 2,1</td>
+                        <td>Celda 2,2</td>
+                        <td>Celda 2,3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <canvas id="cv01"></canvas>
+
+
+        <div class="right-section">
+          <h2>Números disponibles</h2>
+          <hr>
+          
+        </div>
+      </div>
+
+    <footer>
+        <span class="f3"><a href="./acerca.html">&copy; Practica 3 PCW - 2023 -  Acerca</a></span>
+    </footer>
+    <script src="./index.js"></script>
+    <script>
+        //updatePagination();
+        updateItems(true, 0, false);
+        muestraNav();
+        divisiones();
+    </script>
+</body>
+</html>
