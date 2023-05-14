@@ -58,3 +58,19 @@ button {
 button:hover {
 	background-color: #3e8e41;
 }
+
+
+.tituloNegro {
+    color: #000;
+    text-align: center;
+}
+
+hr {
+    border: 5px solid #00352F;
+    border-radius: 5px;
+    width: 500px;
+}
+
+.section {
+    margin-top: .5em;
+}
