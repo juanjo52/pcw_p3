@@ -1,0 +1,14 @@
+svg {
+    border: 1px solid #000;
+}
+
+.circuloRojo {
+    stroke: #00a;
+    stroke-width: 4px;
+
+    fill: #a00;
+}
+
+img  {
+    border: 1px solid #000;
+}
