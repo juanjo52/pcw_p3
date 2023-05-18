@@ -1,5 +1,5 @@
-const ANCHO = 250;
-const ALTO = 250;
+const ANCHO = 300;
+const ALTO = 300;
 
 function prepararCanvas() {
     let cv = document.querySelector('#cv01');
@@ -31,13 +31,12 @@ function ponerEventos() {
 function recogerTablero(){
 
     let url = 'api/tablero';
-
+    
     fetch(url).then(function(response){
         if(response.ok){
             response.json().then(function(datos){
-                datos.FILAS.forEach(function(e){
-                    
-                    console.log(e)
+                datos.TABLERO.forEach(function(e){
+                    console.log(e);
                 });
             })
         }
