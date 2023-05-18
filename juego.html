@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>P1</title>
-    <link rel="stylesheet" href="cssfont/fontello.css"> 
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/juego.css">
+    <script src="./js/juego.js"></script>
     <!-- en css salta advertencia -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Rajdhani&display=swap');
@@ -49,10 +49,8 @@
                     </tr>
                 </tbody>
             </table>
+            <canvas id="cv01"></canvas>
         </div>
-
-        <canvas id="cv01"></canvas>
-
 
         <div class="right-section">
           <h2>Números disponibles</h2>
@@ -64,12 +62,12 @@
     <footer>
         <span class="f3"><a href="./acerca.html">&copy; Practica 3 PCW - 2023 -  Acerca</a></span>
     </footer>
-    <script src="./index.js"></script>
     <script>
         //updatePagination();
         updateItems(true, 0, false);
         muestraNav();
-        divisiones();
+        recogerTablero();
+        
     </script>
 </body>
 </html>

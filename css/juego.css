@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
 }
@@ -30,4 +31,13 @@ th, td {
     text-align: center;
     padding: 10px;
     border: 1px solid black;
+}
+
+div > div > canvas {
+    margin-top: 10px;
+    border:1px solid #000;
+}
+
+article > h2 {
+    font-family: 'Sigmar', cursive;
 }

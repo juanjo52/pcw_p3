@@ -1,5 +1,5 @@
-const ANCHO = 480;
-const ALTO = 360;
+const ANCHO = 250;
+const ALTO = 250;
 
 function prepararCanvas() {
     let cv = document.querySelector('#cv01');
@@ -8,6 +8,7 @@ function prepararCanvas() {
     cv.height = ALTO;
 
     ponerEventos();
+    divisiones();
 }
 
 function ponerEventos() {
@@ -17,8 +18,8 @@ function ponerEventos() {
     cv.addEventListener('click', function(evt){ // Para cuando se pulsa en la celda...
         let x = evt.offsetX,
             y = evt.offsetY,
-            altoCelda = ALTO / 3,
-            anchoCelda = ANCHO / 3,
+            altoCelda = ALTO / 4,
+            anchoCelda = ANCHO / 4,
             fila,col;
 
         fila = Math.floor(y / altoCelda);
@@ -27,16 +28,32 @@ function ponerEventos() {
     });
 }
 
+function recogerTablero(){
+
+    let url = 'api/tablero';
+
+    fetch(url).then(function(response){
+        if(response.ok){
+            response.json().then(function(datos){
+                datos.FILAS.forEach(function(e){
+                    
+                    console.log(e)
+                });
+            })
+        }
+    })
+}
+
 function divisiones() {
     let cv = document.querySelector('#cv01'),
     ctx = cv.getContext('2d'),
-    celdas = 3,
-    anchoCelda = ANCHO / 3,
-    altoCelda = ALTO / 3;
+    celdas = 4,
+    anchoCelda = ANCHO / 4,
+    altoCelda = ALTO / 4;
 
     ctx.beginPath();
-    ctx.strokeStyle = '#00a';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'BLACK';
+    ctx.lineWidth = 1;
 
     for(let i=1; i<celdas; i++){
         // verticales 
@@ -48,5 +65,9 @@ function divisiones() {
     }
 
     ctx.stroke();
-
 }
+
+// Ejecutar al cargar la página
+window.addEventListener('load', function() {
+  prepararCanvas();
+});
