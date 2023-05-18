@@ -28,15 +28,55 @@ function ponerEventos() {
     });
 }
 
+function pintarPosiciones(posX,posY){
+
+    console.log('Fila-->'+ posX + ' Columna-->'+posY);
+
+    let cv = document.querySelector('#cv01');
+
+    cv.width = ANCHO;
+    cv.height = ALTO;
+
+    let altoCelda = cv.height / 4;
+    let anchoCelda = cv.width / 4;
+    let fila = posX; // Fila de ejemplo
+    let col = posY; // Columna de ejemplo
+  
+    // Pintar en el canvas
+    let ctx = cv.getContext('2d', { willReadFrequently: true });
+
+    // Guardar la imagen actual del canvas
+    let imageData = ctx.getImageData(0, 0, cv.width, cv.height);
+
+    // Restaurar la imagen previa en el canvas
+    ctx.putImageData(imageData, 0, 0);
+
+    ctx.fillStyle = 'red';
+    ctx.fillRect(col * anchoCelda, fila * altoCelda, anchoCelda, altoCelda);
+
+    ctx.stroke();
+}
+
 function recogerTablero(){
 
     let url = 'api/tablero';
+    let pos = 0;
+    let cont = 0;
     
     fetch(url).then(function(response){
         if(response.ok){
             response.json().then(function(datos){
                 datos.TABLERO.forEach(function(e){
+                    
                     console.log(e);
+                    for(let i = 0; i < e.length ; i++){
+                        
+                        if(e[i] === -1){ 
+                            pos = i;
+                            pintarPosiciones(cont,i);
+                        }                
+                    }
+                    cont++;
                 });
             })
         }
