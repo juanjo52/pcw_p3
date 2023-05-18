@@ -9,6 +9,7 @@ function prepararCanvas() {
 
     ponerEventos();
     divisiones();
+    recogerTablero();
 }
 
 function ponerEventos() {
@@ -30,30 +31,23 @@ function ponerEventos() {
 
 function pintarPosiciones(posX,posY){
 
+    const cv = document.querySelector('#cv01');
+
     console.log('Fila-->'+ posX + ' Columna-->'+posY);
 
-    let cv = document.querySelector('#cv01');
+    let altoCelda = ALTO / 4;
+    let anchoCelda = ANCHO / 4;
 
-    cv.width = ANCHO;
-    cv.height = ALTO;
-
-    let altoCelda = cv.height / 4;
-    let anchoCelda = cv.width / 4;
-    let fila = posX; // Fila de ejemplo
-    let col = posY; // Columna de ejemplo
+    let fila = posX;
+    let col = posY; 
   
-    // Pintar en el canvas
-    let ctx = cv.getContext('2d', { willReadFrequently: true });
-
-    // Guardar la imagen actual del canvas
-    let imageData = ctx.getImageData(0, 0, cv.width, cv.height);
-
-    // Restaurar la imagen previa en el canvas
-    ctx.putImageData(imageData, 0, 0);
-
+    const ctx = cv.getContext('2d');
     ctx.fillStyle = 'red';
-    ctx.fillRect(col * anchoCelda, fila * altoCelda, anchoCelda, altoCelda);
 
+    ctx.fillRect(col * anchoCelda, 
+                fila * altoCelda, 
+                anchoCelda, 
+                altoCelda);
     ctx.stroke();
 }
 
@@ -62,7 +56,7 @@ function recogerTablero(){
     let url = 'api/tablero';
     let pos = 0;
     let cont = 0;
-    
+
     fetch(url).then(function(response){
         if(response.ok){
             response.json().then(function(datos){
@@ -78,10 +72,53 @@ function recogerTablero(){
                     }
                     cont++;
                 });
-            })
+            });
         }
-    })
+    });
 }
+
+//--------------------------------ESTO FUNCIONA-----------------------------------//
+// function recogerTablero() {
+
+//     let url = 'api/tablero';
+//     let cv = document.querySelector('#cv01');
+  
+//     fetch(url)
+//         .then(function(response) {
+//         if (response.ok) {
+//             return response.json();
+//         }
+//         throw new Error('Error en la respuesta de la API');
+//         })
+//         .then(function(datos) {
+//         cv.width = ANCHO;
+//         cv.height = ALTO;
+
+//         let altoCelda = cv.height / 4;
+//         let anchoCelda = cv.width / 4;
+
+//         let ctx = cv.getContext('2d');
+//         ctx.fillStyle = 'red';
+
+//         datos.TABLERO.forEach(function(fila, posY) {
+//             fila.forEach(function(valor, posX) {
+//             if (valor === -1) {
+//                 ctx.fillRect(
+//                 posX * anchoCelda,
+//                 posY * altoCelda,
+//                 anchoCelda,
+//                 altoCelda
+//                 );
+//             }
+//             });
+//         });
+
+//         ctx.stroke();
+//         })
+//         .catch(function(error) {
+//         console.error(error);
+//         });
+// }
 
 function divisiones() {
     let cv = document.querySelector('#cv01'),
@@ -107,6 +144,6 @@ function divisiones() {
 }
 
 // Ejecutar al cargar la página
-window.addEventListener('load', function() {
-  prepararCanvas();
-});
+// window.addEventListener('load', function() {
+//   prepararCanvas();
+// });
