@@ -1,4 +1,6 @@
-// SESION STORAGE
+//--------------------------------------------------------------------------------------
+//SESSIONSTORAGE
+//--------------------------------------------------------------------------------------
 
 (function(){
     if(!sessionStorage['_jugador1_'] || !sessionStorage['_jugador2_']){
@@ -8,6 +10,11 @@
 
 
 
+
+
+//--------------------------------------------------------------------------------------
+//CANVAS
+//--------------------------------------------------------------------------------------
 const ANCHO = 300;
 const ALTO = 300;
 
@@ -87,49 +94,6 @@ function recogerTablero(){
     });
 }
 
-//--------------------------------ESTO FUNCIONA-----------------------------------//
-// function recogerTablero() {
-
-//     let url = 'api/tablero';
-//     let cv = document.querySelector('#cv01');
-  
-//     fetch(url)
-//         .then(function(response) {
-//         if (response.ok) {
-//             return response.json();
-//         }
-//         throw new Error('Error en la respuesta de la API');
-//         })
-//         .then(function(datos) {
-//         cv.width = ANCHO;
-//         cv.height = ALTO;
-
-//         let altoCelda = cv.height / 4;
-//         let anchoCelda = cv.width / 4;
-
-//         let ctx = cv.getContext('2d');
-//         ctx.fillStyle = 'red';
-
-//         datos.TABLERO.forEach(function(fila, posY) {
-//             fila.forEach(function(valor, posX) {
-//             if (valor === -1) {
-//                 ctx.fillRect(
-//                 posX * anchoCelda,
-//                 posY * altoCelda,
-//                 anchoCelda,
-//                 altoCelda
-//                 );
-//             }
-//             });
-//         });
-
-//         ctx.stroke();
-//         })
-//         .catch(function(error) {
-//         console.error(error);
-//         });
-// }
-
 function divisiones() {
     let cv = document.querySelector('#cv01'),
     ctx = cv.getContext('2d'),
@@ -153,7 +117,7 @@ function divisiones() {
     ctx.stroke();
 }
 
-// Ejecutar al cargar la página
-// window.addEventListener('load', function() {
-//   prepararCanvas();
-// });
+
+//--------------------------------------------------------------------------------------
+//JUEGO
+//--------------------------------------------------------------------------------------
