@@ -1,3 +1,13 @@
+// SESION STORAGE
+
+(function(){
+    if(!sessionStorage['_jugador1_'] || !sessionStorage['_jugador2_']){
+        location.href = 'index.html';
+    }
+})();
+
+
+
 const ANCHO = 300;
 const ALTO = 300;
 
