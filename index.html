@@ -13,6 +13,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Rajdhani&display=swap');
     </style>
+    <script src="js/index.js"></script>
 </head>
 <body>
     <header class="header">
@@ -63,11 +64,11 @@
             <h2 class="tituloNegro">Jugadores</h2>
             <hr>
             <div class="form">
-                <label for="input1">Jugador 1:</label>
-                <input type="text" id="input1" name="input1"><br>
-                <label for="input2">Jugador 2:</label>
-                <input type="text" id="input2" name="input2"> <br>
-                <button type="button" id="btnJugar">Jugar</button>
+                <label for="jugador1">Jugador 1:</label>
+                <input type="text" id="jugador1" name="input1"><br>
+                <label for="jugador2">Jugador 2:</label>
+                <input type="text" id="jugador2" name="input2"> <br>
+                <button type="submit" id="btnJugar" onclick="recogeNombres()">Jugar</button>
                 <button type="button" id="btnLimpiar">Limpiar</button>
             </div>
         </div>
