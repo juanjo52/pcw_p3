@@ -1,7 +1,3 @@
-
-// Recuperar el valor de la variable almacenada en localStorage
-var miVariable = localStorage.getItem('miVariable');
-
 //--------------------------------------------------------------------------------------
 //SESSIONSTORAGE
 //--------------------------------------------------------------------------------------
@@ -12,21 +8,25 @@ var miVariable = localStorage.getItem('miVariable');
     }
 })();
 
-function estadoPartida(){
+function estadoPartida() {
+    let p1 = document.getElementById("PuntosJ1").innerHTML;
+    let p2 = document.getElementById("PuntosJ2").innerHTML;
+    let t; 
 
-    let p1 = document.getElementById("PuntosJ1").innerHTML; 
-    let p2 = document.getElementById("PuntosJ2").innerHTML; 
+    document.getElementById('TurnoJ1').innerHTML == "*" ? t = 1 :
+    t = 2;
 
-    let partida = {
-
-        "Tablero" : "",
-        "Jugador1" : JSON.parse(sessionStorage['_jugador1_']).Jugador1,
-        "Jugador2" : JSON.parse(sessionStorage['_jugador2_']).Jugador2,
-        "Puntos1" : p1,
-        "Puntos2" : p2
+    if (sessionStorage['_partida_'] == null) {
+      let partida = {
+        Tablero: "",
+        Jugador1: JSON.parse(sessionStorage['_jugador1_']).Jugador1,
+        Jugador2: JSON.parse(sessionStorage['_jugador2_']).Jugador2,
+        Puntos1: p1,
+        Puntos2: p2,
+        Turno: t
+      };
+      sessionStorage.setItem('_partida_', JSON.stringify(partida));
     }
-
-    sessionStorage.setItem('_partida_', JSON.stringify(partida));
 }
 
 //--------------------------------------------------------------------------------------
@@ -35,18 +35,33 @@ function estadoPartida(){
 
 function partida(){
 
-    if(miVariable === true){
+    if(sessionStorage['_partida_'] != null){
+
         console.log("pito pito");
+        console.log(sessionStorage['_partida_']);
+
+        document.getElementById('TablaJ1').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador1;
+        document.getElementById('TablaJ2').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador2;
+
+        console.log("------------------------------------------");
+        console.log(document.getElementById('TurnoJ1').innerHTML);
+        console.log(document.getElementById('TurnoJ2').innerHTML);
+
+        if(JSON.parse(sessionStorage['_partida_']).Turno === 1){
+            document.getElementById('TurnoJ1').innerHTML = "*";
+            document.getElementById('TurnoJ2').innerHTML = "";
+        }
+        else{
+            document.getElementById('TurnoJ1').innerHTML = "";
+            document.getElementById('TurnoJ2').innerHTML = "*";
+        }
+
+
     }
     else{
         
         completarTabla();
         generarNumerosAleatorios();
-        if (miVariable !== 'true') {
-            miVariable = 'true';
-            localStorage.setItem('miVariable', miVariable);
-        }
-        
     }   
 }
 
