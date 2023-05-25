@@ -1,3 +1,7 @@
+
+// Recuperar el valor de la variable almacenada en localStorage
+var miVariable = localStorage.getItem('miVariable');
+
 //--------------------------------------------------------------------------------------
 //SESSIONSTORAGE
 //--------------------------------------------------------------------------------------
@@ -7,6 +11,104 @@
         location.href = 'index.html';
     }
 })();
+
+function estadoPartida(){
+
+    let p1 = document.getElementById("PuntosJ1").innerHTML; 
+    let p2 = document.getElementById("PuntosJ2").innerHTML; 
+
+    let partida = {
+
+        "Tablero" : "",
+        "Jugador1" : JSON.parse(sessionStorage['_jugador1_']).Jugador1,
+        "Jugador2" : JSON.parse(sessionStorage['_jugador2_']).Jugador2,
+        "Puntos1" : p1,
+        "Puntos2" : p2
+    }
+
+    sessionStorage.setItem('_partida_', JSON.stringify(partida));
+}
+
+//--------------------------------------------------------------------------------------
+//JUEGO
+//--------------------------------------------------------------------------------------
+
+function partida(){
+
+    if(miVariable === true){
+        console.log("pito pito");
+    }
+    else{
+        
+        completarTabla();
+        generarNumerosAleatorios();
+        if (miVariable !== 'true') {
+            miVariable = 'true';
+            localStorage.setItem('miVariable', miVariable);
+        }
+        
+    }   
+}
+
+function modalPrimerTurno(jugador){
+    
+    console.log('aqui no se mete');
+
+    let dialogo = document.createElement('dialog');
+
+    dialogo.innerHTML = 
+    `<h3>¡El primero en comenzar la partida es el jugador: ${jugador}!</h3>`+
+    '<button onclick="cerrarDialogo()">Cerrar</button>';
+
+    document.body.appendChild(dialogo);
+    dialogo.showModal();
+    estadoPartida();
+}
+
+function cerrarDialogo(){
+    
+    const urlParam = new URLSearchParams(window.location.search);
+    const z = urlParam.get('id');
+    document.querySelector('dialog').close();
+    document.querySelector('dialog').remove();
+}
+
+function completarTabla(){
+
+    let turnoj1 = 0; 
+    let jugadorInicial;
+
+    var random = Math.floor(Math.random() * 2);
+    console.log(random);
+    random == turnoj1 ? jugadorInicial = JSON.parse(sessionStorage['_jugador1_']).Jugador1 : jugadorInicial = JSON.parse(sessionStorage['_jugador2_']).Jugador2;
+
+    console.log(sessionStorage['_jugador1_']);
+    document.getElementById('TablaJ1').innerHTML = JSON.parse(sessionStorage['_jugador1_']).Jugador1;
+    document.getElementById('TablaJ2').innerHTML = JSON.parse(sessionStorage['_jugador2_']).Jugador2;
+    
+    random == 0 ? document.getElementById('TurnoJ1').innerHTML = "*" : document.getElementById('TurnoJ2').innerHTML = "*";
+
+    modalPrimerTurno(jugadorInicial);
+
+}
+
+function generarNumerosAleatorios() {
+    var numeros = [];
+    
+    while (numeros.length < 3) {
+        var numero = Math.floor(Math.random() * 9) + 1;
+        if (numero !== 5 && !numeros.includes(numero)) {
+        numeros.push(numero);
+        }
+    }
+    
+    document.getElementById('numero1').innerHTML = numeros[0]; //el innerHtml hace que actualice botones
+    document.getElementById('numero2').innerHTML = numeros[1];
+    document.getElementById('numero3').innerHTML = numeros[2];
+
+    console.log(numeros);
+}
+
 
 //--------------------------------------------------------------------------------------
 //CANVAS
@@ -114,6 +216,4 @@ function divisiones() {
 }
 
 
-//--------------------------------------------------------------------------------------
-//JUEGO
-//--------------------------------------------------------------------------------------
+
