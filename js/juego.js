@@ -11,11 +11,26 @@
 function estadoPartida() {
     let p1 = document.getElementById("PuntosJ1").innerHTML;
     let p2 = document.getElementById("PuntosJ2").innerHTML;
+
     let t; 
 
-    document.getElementById('TurnoJ1').innerHTML == "*" ? t = 1 :
-    t = 2;
+    let b1 = document.getElementById("numero1").value;
+    let b2 = document.getElementById("numero2").value;
+    let b3 = document.getElementById("numero3").value;
 
+    document.getElementById('TurnoJ1').innerHTML == "*" ? t = 1 : t = 2;
+    var n = [];
+
+    console.log("------------------------------------------");
+    console.log("------------------------------------------");
+    console.log(b1);
+
+    n.push(b1);
+    n.push(b2);
+    n.push(b3);
+    
+    console.log(n);
+    
     if (sessionStorage['_partida_'] == null) {
       let partida = {
         Tablero: "",
@@ -23,7 +38,8 @@ function estadoPartida() {
         Jugador2: JSON.parse(sessionStorage['_jugador2_']).Jugador2,
         Puntos1: p1,
         Puntos2: p2,
-        Turno: t
+        Turno: t,
+        Numeros : n
       };
       sessionStorage.setItem('_partida_', JSON.stringify(partida));
     }
@@ -38,14 +54,9 @@ function partida(){
     if(sessionStorage['_partida_'] != null){
 
         console.log("pito pito");
-        console.log(sessionStorage['_partida_']);
-
+       
         document.getElementById('TablaJ1').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador1;
         document.getElementById('TablaJ2').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador2;
-
-        console.log("------------------------------------------");
-        console.log(document.getElementById('TurnoJ1').innerHTML);
-        console.log(document.getElementById('TurnoJ2').innerHTML);
 
         if(JSON.parse(sessionStorage['_partida_']).Turno === 1){
             document.getElementById('TurnoJ1').innerHTML = "*";
@@ -56,7 +67,12 @@ function partida(){
             document.getElementById('TurnoJ2').innerHTML = "*";
         }
 
+        console.log("------------------------------------------");
+        console.log(JSON.parse(sessionStorage['_partida_']).Numeros[0]);
 
+        document.getElementById('numero1').value = JSON.parse(sessionStorage['_partida_']).Numeros[0].toString();
+        document.getElementById("numero2").value = JSON.parse(sessionStorage['_partida_']).Numeros[1].toString();
+        document.getElementById("numero3").value = JSON.parse(sessionStorage['_partida_']).Numeros[2].toString();
     }
     else{
         
@@ -108,6 +124,7 @@ function completarTabla(){
 }
 
 function generarNumerosAleatorios() {
+
     var numeros = [];
     
     while (numeros.length < 3) {
