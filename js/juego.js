@@ -9,17 +9,19 @@
 })();
 
 function estadoPartida() {
+
     let p1 = document.getElementById("PuntosJ1").innerHTML;
     let p2 = document.getElementById("PuntosJ2").innerHTML;
 
     let t; 
 
-    let b1 = document.getElementById("numero1").value;
-    let b2 = document.getElementById("numero2").value;
-    let b3 = document.getElementById("numero3").value;
+    let b1 = document.getElementById("numero1").innerHTML;
+    let b2 = document.getElementById("numero2").innerHTML;
+    let b3 = document.getElementById("numero3").innerHTML;
 
     document.getElementById('TurnoJ1').innerHTML == "*" ? t = 1 : t = 2;
     var n = [];
+    var tablero = [];
 
     console.log("------------------------------------------");
     console.log("------------------------------------------");
@@ -30,21 +32,22 @@ function estadoPartida() {
     n.push(b3);
     
     console.log(n);
-    
+
     if (sessionStorage['_partida_'] == null) {
-      let partida = {
-        Tablero: "",
-        Jugador1: JSON.parse(sessionStorage['_jugador1_']).Jugador1,
-        Jugador2: JSON.parse(sessionStorage['_jugador2_']).Jugador2,
-        Puntos1: p1,
-        Puntos2: p2,
-        Turno: t,
-        Numeros : n
-      };
-      sessionStorage.setItem('_partida_', JSON.stringify(partida));
+
+        // tablero = recogerTablero();
+        let partida = {
+            Tablero: tablero,
+            Jugador1: JSON.parse(sessionStorage['_jugador1_']).Jugador1,
+            Jugador2: JSON.parse(sessionStorage['_jugador2_']).Jugador2,
+            Puntos1: p1,
+            Puntos2: p2,
+            Turno: t,
+            Numeros : n
+        };
+        sessionStorage.setItem('_partida_', JSON.stringify(partida));
     }
 }
-
 //--------------------------------------------------------------------------------------
 //JUEGO
 //--------------------------------------------------------------------------------------
@@ -54,7 +57,8 @@ function partida(){
     if(sessionStorage['_partida_'] != null){
 
         console.log("pito pito");
-       
+        // console.log(recogerTablero());
+        
         document.getElementById('TablaJ1').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador1;
         document.getElementById('TablaJ2').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador2;
 
@@ -70,20 +74,83 @@ function partida(){
         console.log("------------------------------------------");
         console.log(JSON.parse(sessionStorage['_partida_']).Numeros[0]);
 
-        document.getElementById('numero1').value = JSON.parse(sessionStorage['_partida_']).Numeros[0].toString();
-        document.getElementById("numero2").value = JSON.parse(sessionStorage['_partida_']).Numeros[1].toString();
-        document.getElementById("numero3").value = JSON.parse(sessionStorage['_partida_']).Numeros[2].toString();
+        document.getElementById('numero1').innerHTML = JSON.parse(sessionStorage['_partida_']).Numeros[0];
+        document.getElementById("numero2").innerHTML = JSON.parse(sessionStorage['_partida_']).Numeros[1];
+        document.getElementById("numero3").innerHTML = JSON.parse(sessionStorage['_partida_']).Numeros[2];
+
+        let t = JSON.parse(sessionStorage['_partida_']).Tablero;
+
+        console.log(t);
+
+        let c = 0;
+        let p = 0;
+
+        t.forEach(function(e){
+
+            for(let i = 0; i < e.length;i++){
+                if(e[i] === -1){ 
+                    p = i;
+                    pintarPosiciones(c,p);
+                    
+                }           
+            }
+            c++;
+        });
     }
     else{
-        
-        completarTabla();
+        // recogerTablero();
+
         generarNumerosAleatorios();
+        completarTabla();
+        let url = 'api/tablero';
+        let pos = 0;
+        let cont = 0;
+        
+        let v0 = [], v1 = [], v2 = [], v3 = []; 
+        fetch(url).then(function(response){
+            if(response.ok){
+                response.json().then(function(datos){
+                    datos.TABLERO.forEach(function(e){
+                        
+                        console.log(e);
+                        for(let i = 0; i < e.length ; i++){
+    
+                            if(e[i] === -1){ 
+                                pos = i;
+                                pintarPosiciones(cont,pos);
+                                if(cont == 0) v0.push(e[i]);
+                                if(cont == 1) v1.push(e[i]);
+                                if(cont == 2) v2.push(e[i]);
+                                if(cont == 3) v3.push(e[i]);
+                            }
+                            else{
+                                if(cont == 0) v0.push(e[i]);
+                                if(cont == 1) v1.push(e[i]);
+                                if(cont == 2) v2.push(e[i]);
+                                if(cont == 3) v3.push(e[i]); 
+                            }            
+                        }
+                        cont++;
+                    });     
+                    tablero = [v0,v1,v2,v3];
+                    actualizarTableroEnPartida(tablero);
+                });
+            }
+        });
     }   
+}
+
+function actualizarTableroEnPartida(nuevoTablero) {
+    let partida = JSON.parse(sessionStorage['_partida_']);
+    partida.Tablero = nuevoTablero;
+    console.log(partida);
+    sessionStorage['_partida_'] = JSON.stringify(partida);// aqui peta 100%
 }
 
 function modalPrimerTurno(jugador){
     
     console.log('aqui no se mete');
+    
 
     let dialogo = document.createElement('dialog');
 
@@ -141,7 +208,6 @@ function generarNumerosAleatorios() {
     console.log(numeros);
 }
 
-
 //--------------------------------------------------------------------------------------
 //CANVAS
 //--------------------------------------------------------------------------------------
@@ -156,7 +222,7 @@ function prepararCanvas() {
 
     ponerEventos();
     divisiones();
-    recogerTablero();
+    // recogerTablero();
 }
 
 function ponerEventos() {
@@ -196,32 +262,6 @@ function pintarPosiciones(posX,posY){
                 anchoCelda, 
                 altoCelda);
     ctx.stroke();
-}
-
-function recogerTablero(){
-
-    let url = 'api/tablero';
-    let pos = 0;
-    let cont = 0;
-
-    fetch(url).then(function(response){
-        if(response.ok){
-            response.json().then(function(datos){
-                datos.TABLERO.forEach(function(e){
-                    
-                    console.log(e);
-                    for(let i = 0; i < e.length ; i++){
-                        
-                        if(e[i] === -1){ 
-                            pos = i;
-                            pintarPosiciones(cont,i);
-                        }                
-                    }
-                    cont++;
-                });
-            });
-        }
-    });
 }
 
 function divisiones() {
