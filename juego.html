@@ -23,6 +23,12 @@
         <h1>NumTris</h1>
         <h2>Consigue sumar el mayor número de múltiplos de 5 para ganar</h2>
     </header>
+    <nav id="menuNav">
+        <ul>
+            <li><a href="#">Terminar partida</a></li>
+            <li><a onclick="ayuda();">Ayuda</a></li>
+        </ul>
+    </nav>
 
     <div class="container">
         <div class="left-section">
@@ -56,9 +62,9 @@
           <h2>Números disponibles</h2>
           <hr>
 
-          <button id="numero1"></button>
-          <button id="numero2"></button>
-          <button id="numero3"></button>
+          <button id="numero1" onclick="selctNumero(event)"></button>
+          <button id="numero2" onclick="selctNumero(event)"></button>
+          <button id="numero3" onclick="selctNumero(event)"></button>
           
         </div>
       </div>
