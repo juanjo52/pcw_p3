@@ -302,6 +302,8 @@ function pintarNumeros(num,fil,col){
     let altoCelda = ALTO / 4;
     let anchoCelda = ANCHO / 4;
 
+    let pintado = false;
+
     let t = JSON.parse(sessionStorage['_partida_']).Tablero;
 
         let cont = 0; 
@@ -317,6 +319,7 @@ function pintarNumeros(num,fil,col){
                             t[cont][i] = num;
                             ctx.fillText(num, col*altoCelda + altoCelda/2 -13,fil*anchoCelda + anchoCelda/2 +17);
                             ctx.stroke();
+                            pintado = true;
     
                         }  
                     }
@@ -326,27 +329,29 @@ function pintarNumeros(num,fil,col){
         });
 
     actualizarTableroEnPartida(t);
-
-    let id = JSON.parse(sessionStorage['_numero_']).ID;
-    let numA = JSON.parse(sessionStorage['_partida_']).Numeros;
-
-    for (let i = 0; i < numA.length; i++) {
-        if (numA[i] == num) {
-            numA[i] = 0; // Actualiza el valor en la variable numA
-        }
-    }
-
-    // Vuelve a guardar la variable actualizada en la sesión
-    let partida = JSON.parse(sessionStorage['_partida_']);
-    partida.Numeros = numA;
-    sessionStorage.setItem('_partida_', JSON.stringify(partida));
-
-    document.getElementById(id).innerHTML = 0;  // ---> aqui hay que hacer que desablite el boton o algo 
-
-    if(!compruebaNumeros()) generarNumerosAleatorios();
     
-    sessionStorage['_numero_'] = null;
+    if(pintado){
+        let id = JSON.parse(sessionStorage['_numero_']).ID;
+        let numA = JSON.parse(sessionStorage['_partida_']).Numeros;
+    
+        for (let i = 0; i < numA.length; i++) {
+            if (numA[i] == num) {
+                numA[i] = 0; // Actualiza el valor en la variable numA
+            }
+        }
+    
+        // Vuelve a guardar la variable actualizada en la sesión
+        let partida = JSON.parse(sessionStorage['_partida_']);
+        partida.Numeros = numA;
+        sessionStorage.setItem('_partida_', JSON.stringify(partida));
+    
+        document.getElementById(id).innerHTML = 0;  // ---> aqui hay que hacer que desablite el boton o algo 
+    
+        if(!compruebaNumeros()) generarNumerosAleatorios();
 
+        sessionStorage['_numero_'] = null;
+
+    }
 }
 
 function pintarNumeros2(num,fil,col){
