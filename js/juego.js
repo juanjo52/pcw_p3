@@ -92,6 +92,9 @@ function partida(){
                     p = i;
                     pintarPosiciones(c,p);
 
+                }else if(t[c][i] != 0){
+                    console.log('hola');
+                    pintarNumeros2(e[i],c,i);
                 }
             }
             c++;
@@ -212,16 +215,12 @@ function selctNumero(evt){
 
     let numBoton = {
 
-        Numero: document.getElementById(evt.target.id).innerHTML
+        Numero: document.getElementById(evt.target.id).innerHTML,
+        ID: document.getElementById(evt.target.id)
     }
 
    sessionStorage.setItem('_numero_',JSON.stringify(numBoton));
 }
-
-// function pintarNumeros(){
-
-
-// }
 
 //--------------------------------------------------------------------------------------
 //CANVAS
@@ -267,7 +266,6 @@ function ponerEventos() {
             }
             cont++;
         });
-
         // console.log(`(x,y): (${fila}, ${col})`);
     });
 }
@@ -276,6 +274,71 @@ function pintarNumeros(num,fil,col){
 
     console.log(`El numero a pintar es ${num}; en la pos --> ${fil}, ${col} `);
 
+    const canvas = document.getElementById("cv01");
+    const ctx = canvas.getContext("2d");
+    ctx.font = "48px Arial"; // Establece el tamaño y la fuente del texto
+    ctx.fillStyle = "black"; // Establece el color de relleno del texto
+
+    let altoCelda = ALTO / 4;
+    let anchoCelda = ANCHO / 4;
+
+    let t = JSON.parse(sessionStorage['_partida_']).Tablero;
+
+        let cont = 0; 
+
+        t.forEach(function(e){
+            for(let i = 0; i < e.length;i++){
+
+                if(cont == fil && i == col){
+
+                    if(e[i]!=-1){
+                        console.log('entra1')
+                        if(e[i] == 0){
+                            t[cont][i] = num;
+                            ctx.fillText(num, col*altoCelda + altoCelda/2 -13,fil*anchoCelda + anchoCelda/2 +17);
+                            ctx.stroke();
+    
+                        }  
+                    }
+                }
+            }
+            cont++;
+        });
+
+    actualizarTableroEnPartida(t);
+    sessionStorage['_numero_'] = null;
+
+}
+
+function pintarNumeros2(num,fil,col){
+
+    console.log(`El numero a pintar es ${num}; en la pos --> ${fil}, ${col} `);
+
+    const canvas = document.getElementById("cv01");
+    const ctx = canvas.getContext("2d");
+    ctx.font = "48px Arial"; // Establece el tamaño y la fuente del texto
+    ctx.fillStyle = "black"; // Establece el color de relleno del texto
+
+    let altoCelda = ALTO / 4;
+    let anchoCelda = ANCHO / 4;
+
+    let t = JSON.parse(sessionStorage['_partida_']).Tablero;
+
+        let cont = 0; 
+
+        t.forEach(function(e){
+            for(let i = 0; i < e.length;i++){
+
+                if(cont == fil && i == col){
+
+                    ctx.fillText(num, col*altoCelda + altoCelda/2 -13,fil*anchoCelda + anchoCelda/2 +17);
+                    ctx.stroke();
+                    console.log('entra')
+
+                }
+            }
+            cont++;
+        });
 }
 
 function pintarPosiciones(posX,posY){
