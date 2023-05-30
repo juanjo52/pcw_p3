@@ -208,6 +208,15 @@ function generarNumerosAleatorios() {
     document.getElementById('numero2').innerHTML = numeros[1];
     document.getElementById('numero3').innerHTML = numeros[2];
 
+    if(sessionStorage['_partida_'] != null){
+
+        var partida = JSON.parse(sessionStorage['_partida_']);
+        partida.Numeros[0] = numeros[0];
+        partida.Numeros[1] = numeros[1];
+        partida.Numeros[2] = numeros[2];
+        sessionStorage.setItem('_partida_', JSON.stringify(partida));
+    }
+
     console.log(numeros);
 }
 
@@ -216,7 +225,7 @@ function selctNumero(evt){
     let numBoton = {
 
         Numero: document.getElementById(evt.target.id).innerHTML,
-        ID: document.getElementById(evt.target.id)
+        ID: evt.target.id
     }
 
    sessionStorage.setItem('_numero_',JSON.stringify(numBoton));
@@ -306,9 +315,45 @@ function pintarNumeros(num,fil,col){
         });
 
     actualizarTableroEnPartida(t);
+
+    let id = JSON.parse(sessionStorage['_numero_']).ID;
+    let numA = JSON.parse(sessionStorage['_partida_']).Numeros;
+
+    for (let i = 0; i < numA.length; i++) {
+        if (numA[i] == num) {
+            numA[i] = 0; // Actualiza el valor en la variable numA
+        }
+    }
+
+    // Vuelve a guardar la variable actualizada en la sesión
+    let partida = JSON.parse(sessionStorage['_partida_']);
+    partida.Numeros = numA;
+    sessionStorage.setItem('_partida_', JSON.stringify(partida));
+
+    document.getElementById(id).innerHTML = 0;  // ---> aqui hay que hacer que desablite el boton o algo 
+
+    if(!compruebaNumeros()){
+        generarNumerosAleatorios();
+    }
+   
     sessionStorage['_numero_'] = null;
 
 }
+
+function compruebaNumeros(){
+
+    let nums = JSON.parse(sessionStorage['_partida_']).Numeros;
+    let haynums = false; 
+
+    for(let i = 0; i < nums.length && !haynums;i++){
+        if(nums[i] !=0) haynums = true;
+    }
+
+    return haynums;
+}
+
+
+
 
 function pintarNumeros2(num,fil,col){
 
