@@ -231,6 +231,18 @@ function selctNumero(evt){
    sessionStorage.setItem('_numero_',JSON.stringify(numBoton));
 }
 
+function compruebaNumeros(){
+
+    let nums = JSON.parse(sessionStorage['_partida_']).Numeros;
+    let haynums = false; 
+
+    for(let i = 0; i < nums.length && !haynums;i++){
+        if(nums[i] !=0) haynums = true;
+    }
+
+    return haynums;
+}
+
 //--------------------------------------------------------------------------------------
 //CANVAS
 //--------------------------------------------------------------------------------------
@@ -263,8 +275,7 @@ function ponerEventos() {
         col = Math.floor(x / anchoCelda);
 
         let nPintar = JSON.parse(sessionStorage['_numero_']).Numero;
-        let t = JSON.parse(sessionStorage['_partida_']).Tablero;
-        let v0 = [], v1 = [], v2 = [], v3 = [];
+        let t = JSON.parse(sessionStorage['_partida_']).Tablero; 
         let cont = 0; 
 
         t.forEach(function(e){
@@ -275,7 +286,7 @@ function ponerEventos() {
             }
             cont++;
         });
-        // console.log(`(x,y): (${fila}, ${col})`);
+        
     });
 }
 
@@ -332,28 +343,11 @@ function pintarNumeros(num,fil,col){
 
     document.getElementById(id).innerHTML = 0;  // ---> aqui hay que hacer que desablite el boton o algo 
 
-    if(!compruebaNumeros()){
-        generarNumerosAleatorios();
-    }
-   
+    if(!compruebaNumeros()) generarNumerosAleatorios();
+    
     sessionStorage['_numero_'] = null;
 
 }
-
-function compruebaNumeros(){
-
-    let nums = JSON.parse(sessionStorage['_partida_']).Numeros;
-    let haynums = false; 
-
-    for(let i = 0; i < nums.length && !haynums;i++){
-        if(nums[i] !=0) haynums = true;
-    }
-
-    return haynums;
-}
-
-
-
 
 function pintarNumeros2(num,fil,col){
 
