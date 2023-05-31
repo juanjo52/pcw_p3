@@ -78,6 +78,19 @@ function partida(){
         document.getElementById("numero2").innerHTML = JSON.parse(sessionStorage['_partida_']).Numeros[1];
         document.getElementById("numero3").innerHTML = JSON.parse(sessionStorage['_partida_']).Numeros[2];
 
+        if(document.getElementById('numero1').innerHTML == 0){
+            document.getElementById('numero1').classList.add('hidden-content');
+            document.getElementById('numero1').disabled = true; 
+        } 
+        if(document.getElementById('numero2').innerHTML == 0){
+            document.getElementById('numero2').classList.add('hidden-content');
+            document.getElementById('numero2').disabled = true; 
+        }
+        if(document.getElementById('numero3').innerHTML == 0){
+            document.getElementById('numero3').classList.add('hidden-content');
+            document.getElementById('numero3').disabled = true; 
+        }
+
         let t = JSON.parse(sessionStorage['_partida_']).Tablero;
 
         console.log(t);
@@ -228,7 +241,15 @@ function selctNumero(evt){
         ID: evt.target.id
     }
 
-   sessionStorage.setItem('_numero_',JSON.stringify(numBoton));
+    let prevButtonId = JSON.parse(sessionStorage.getItem('_numero_'))?.ID; // Obtén el ID del botón previamente seleccionado
+
+    if (prevButtonId) {
+        let prevButton = document.getElementById(prevButtonId); // Obtén el elemento del botón previamente seleccionado
+        prevButton.style.backgroundColor = 'blue'; // Restablece el color de fondo del botón previo al valor original
+    }
+
+    evt.target.style.backgroundColor = 'red';
+    sessionStorage.setItem('_numero_',JSON.stringify(numBoton));
 }
 
 function compruebaNumeros(){
@@ -335,8 +356,10 @@ function pintarNumeros(num,fil,col){
         let numA = JSON.parse(sessionStorage['_partida_']).Numeros;
     
         for (let i = 0; i < numA.length; i++) {
-            if (numA[i] == num) {
+            if (numA[i] != 0 && id === 'numero' + (i + 1)) {
                 numA[i] = 0; // Actualiza el valor en la variable numA
+                document.getElementById(id).classList.add('hidden-content'); // Oculta el contenido del botón agregando la clase "hidden-content"
+                document.getElementById(id).disabled = true;
             }
         }
     
@@ -347,8 +370,17 @@ function pintarNumeros(num,fil,col){
     
         document.getElementById(id).innerHTML = 0;  // ---> aqui hay que hacer que desablite el boton o algo 
     
-        if(!compruebaNumeros()) generarNumerosAleatorios();
+        if(!compruebaNumeros()){
+            document.getElementById('numero1').classList.remove('hidden-content');// Muestra el contenido del botón quitando la clase "hidden-content"
+            document.getElementById('numero1').disabled = false; 
+            document.getElementById('numero2').classList.remove('hidden-content');
+            document.getElementById('numero2').disabled = false; 
+            document.getElementById('numero3').classList.remove('hidden-content');
+            document.getElementById('numero3').disabled = false; 
+            generarNumerosAleatorios();
+        } 
 
+        document.getElementById(id).style.backgroundColor = 'blue';
         sessionStorage['_numero_'] = null;
 
     }
