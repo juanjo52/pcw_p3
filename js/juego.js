@@ -96,6 +96,9 @@ function partida(){
 
         generarNumerosAleatorios();
         completarTabla();
+
+        sessionStorage['jugadoresTOP'] = null
+        
         let url = 'api/tablero';
         let pos = 0;
         let cont = 0;
@@ -467,7 +470,7 @@ function pintarNumeros(num,fil,col){
                     dialogo.innerHTML =
                    '<h3>¡FIN DE PARTIDA!</h3>'+
                    `<p>El ganador de la partida es --> ${ganador} con una puntuación de ${puntosGanador}</p>`+
-                   '<button onclick="cerrarDialogo()">Cerrar</button>';
+                   `<button onclick="finDeJuego(${ganador},${puntosGanador});">Aceptar</button>`;
                     document.body.appendChild(dialogo);
                     dialogo.showModal();
                 }
@@ -533,6 +536,23 @@ function pintarNumeros(num,fil,col){
     }
 }
 
+
+function finDeJuego(ganador,puntosGanador){
+
+    let winner = {
+
+        Nombre: ganador,
+        Puntos: puntosGanador
+    }
+
+    sessionStorage.setItem('jugadoresTOP', JSON.stringify(winner));
+    sessionStorage['jugadoresTOP'] = JSON.stringify(winner);
+
+    const urlParam = new URLSearchParams(window.location.search);
+    const z = urlParam.get('id');
+    document.querySelector('dialog').close();
+    document.querySelector('dialog').remove();
+}
 function actualizaPuntos(ptos){
 
     console.log(ptos)
