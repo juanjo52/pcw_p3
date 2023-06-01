@@ -10,8 +10,8 @@
 
 function estadoPartida() {
 
-    let p1 = document.getElementById("PuntosJ1").innerHTML;
-    let p2 = document.getElementById("PuntosJ2").innerHTML;
+    let p1 = parseInt(document.getElementById("PuntosJ1").innerHTML);
+    let p2 = parseInt(document.getElementById("PuntosJ2").innerHTML);
 
     let t;
 
@@ -52,6 +52,14 @@ function partida(){
 
         document.getElementById('TablaJ1').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador1;
         document.getElementById('TablaJ2').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador2;
+
+        let p = JSON.parse(sessionStorage.getItem('_partida_'));
+
+        let sumaJugador1 = parseInt(p.Puntos1);
+        let sumaJugador2 = parseInt(p.Puntos2);
+
+        document.getElementById('PuntosJ1').innerHTML = sumaJugador1;
+        document.getElementById('PuntosJ2').innerHTML = sumaJugador2;
 
         if(JSON.parse(sessionStorage['_partida_']).Turno === 1){
             document.getElementById('TurnoJ1').innerHTML = "*";
@@ -260,11 +268,13 @@ function pasarPortablero(){
         let numeroSeleccionado = JSON.parse(sessionStorage['_numero_']);
 
         if (numeroSeleccionado != null) {
-            if (tablero[fila][col] === 0) {
-                cv.style.cursor = 'pointer';
-            } else {
-                cv.style.cursor = 'not-allowed';
-            }
+            if((fila >= 0 && fila <= 3) && (col >= 0 && col <=3)){
+                if (tablero[fila][col] == 0) {
+                    cv.style.cursor = 'pointer';
+                } else {
+                    cv.style.cursor = 'not-allowed';
+                }
+            }   
         } else {
             cv.style.cursor = 'not-allowed';
             
@@ -398,11 +408,11 @@ function pintarNumeros(num,fil,col){
                 if(cont == fil && i == col){
                     if(e[i]!=-1){
                         if(e[i] == 0){
-                            t[cont][i] = num;
+                            t[cont][i] = parseInt(num);
                             ctx.fillText(num, col*altoCelda + altoCelda/2 -13,fil*anchoCelda + anchoCelda/2 +17);
                             ctx.stroke();
                             pintado = true;
-    
+                            
                         }  
                     }
                 }
@@ -413,6 +423,54 @@ function pintarNumeros(num,fil,col){
     actualizarTableroEnPartida(t);
     
     if(pintado){
+
+        //-------------------------------Comprueba el tablero---------------------------------------//
+        // let p = JSON.parse(sessionStorage.getItem('_partida_'));
+
+        // let sumaJugador1 = parseInt(p.Puntos1);
+        // let sumaJugador2 = parseInt(p.Puntos2);
+
+        let xhr = new XMLHttpRequest(),
+            url = 'api/comprobar',
+            fd = new FormData();
+        
+        // Obtén el valor del tablero que deseas pasar como parámetro
+        fd.append('tablero', JSON.stringify(t));
+
+        xhr.open('POST', url, true);
+        xhr.responseType = 'json';
+        
+        xhr.onload = function() {
+            let r = xhr.response;
+            console.log(r);
+            if (r.RESULTADO == 'OK') {
+
+                if(r.CELDAS_SUMA == ''){
+                    actualizarTurno(JSON.parse(sessionStorage['_partida_']).Turno);
+                }else{
+                    
+                    let combos = r.CELDAS_SUMA.map(JSON.parse);
+                    
+                    for(let i = 0; i < combos.length; i++){
+                      
+                        actualizaPuntos(t[combos[i].fila][combos[i].col]);
+                        t[combos[i].fila][combos[i].col] = 0; 
+                    }
+
+                    actualizarTableroEnPartida(t);
+                    canvas.width = canvas.width;
+                    divisiones();
+                    pintarCanvas();
+                }
+            } 
+        }
+        
+        // Agrega el valor del tablero al objeto FormData
+        
+        
+        xhr.send(fd);
+        
+        //-------------------------------Oculata los botones al pintarlos--------------------------//
         let id = JSON.parse(sessionStorage['_numero_']).ID;
         let numA = JSON.parse(sessionStorage['_partida_']).Numeros;
     
@@ -445,6 +503,55 @@ function pintarNumeros(num,fil,col){
         sessionStorage['_numero_'] = null;
 
     }
+}
+
+function actualizaPuntos(ptos){
+
+    console.log(ptos)
+
+    let p = JSON.parse(sessionStorage.getItem('_partida_'));
+
+    let sumaJugador1 = parseInt(p.Puntos1);
+    let sumaJugador2 = parseInt(p.Puntos2);
+
+    if(JSON.parse((sessionStorage['_partida_'])).Turno == 1){
+
+        sumaJugador1 = sumaJugador1 + ptos;
+    }else{
+        sumaJugador2 = sumaJugador2 + ptos;
+        console.log('el jugador tiene' +sumaJugador2)
+    }
+
+    p.Puntos1 = sumaJugador1.toString();
+    p.Puntos2 = sumaJugador2.toString();
+
+    document.getElementById('PuntosJ1').innerHTML = sumaJugador1;
+    document.getElementById('PuntosJ2').innerHTML = sumaJugador2;
+
+    sessionStorage.setItem('_partida_', JSON.stringify(p));
+
+    sessionStorage['_partida_'] = JSON.stringify(p);
+}
+
+
+function actualizarTurno(turno) {
+
+    let t = 0; 
+    if(turno === 1) {
+        t = 2
+        document.getElementById('TurnoJ1').innerHTML = "";
+        document.getElementById('TurnoJ2').innerHTML = "*";
+    }
+
+    if(turno === 2){
+        t = 1;
+        document.getElementById('TurnoJ1').innerHTML = "*";
+        document.getElementById('TurnoJ2').innerHTML = "";
+    } 
+
+    let partida = JSON.parse(sessionStorage['_partida_']);
+    partida.Turno = t
+    sessionStorage['_partida_'] = JSON.stringify(partida);
 }
 
 function pintarNumeros2(num,fil,col){
