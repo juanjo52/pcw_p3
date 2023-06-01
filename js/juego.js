@@ -97,8 +97,6 @@ function partida(){
         generarNumerosAleatorios();
         completarTabla();
 
-        sessionStorage['jugadoresTOP'] = null
-        
         let url = 'api/tablero';
         let pos = 0;
         let cont = 0;
@@ -468,11 +466,12 @@ function pintarNumeros(num,fil,col){
                     let dialogo = document.createElement('dialog');
 
                     dialogo.innerHTML =
-                   '<h3>¡FIN DE PARTIDA!</h3>'+
-                   `<p>El ganador de la partida es --> ${ganador} con una puntuación de ${puntosGanador}</p>`+
-                   `<button onclick="finDeJuego(${ganador},${puntosGanador});">Aceptar</button>`;
+                    '<h3>¡FIN DE PARTIDA!</h3>' +
+                    `<p>El ganador de la partida es --> ${ganador} con una puntuación de ${puntosGanador}</p>` +
+                    `<button onclick="finDeJuego('${ganador}', '${puntosGanador}');">Aceptar</button>`;
                     document.body.appendChild(dialogo);
                     dialogo.showModal();
+                
                 }
                 if(r.CELDAS_SUMA == ''){
 
@@ -540,18 +539,32 @@ function pintarNumeros(num,fil,col){
 function finDeJuego(ganador,puntosGanador){
 
     let winner = {
-
         Nombre: ganador,
         Puntos: puntosGanador
+    };
+    
+    let jugadores = JSON.parse(sessionStorage.getItem('jugadoresTOP'));
+    
+    if (jugadores == null) {
+        sessionStorage.setItem('jugadoresTOP', JSON.stringify([winner]));
+    } else {
+        jugadores.push(winner);
+        jugadores.sort((a, b) => b.Puntos - a.Puntos);
+    
+        if (jugadores.length > 10) {
+            jugadores.pop();
+        }
+    
+        sessionStorage.setItem('jugadoresTOP', JSON.stringify(jugadores));
     }
 
-    sessionStorage.setItem('jugadoresTOP', JSON.stringify(winner));
-    sessionStorage['jugadoresTOP'] = JSON.stringify(winner);
-
+    
     const urlParam = new URLSearchParams(window.location.search);
     const z = urlParam.get('id');
     document.querySelector('dialog').close();
     document.querySelector('dialog').remove();
+    
+    window.location.replace('./index.html');
 }
 function actualizaPuntos(ptos){
 

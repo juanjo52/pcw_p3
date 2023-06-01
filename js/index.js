@@ -25,10 +25,38 @@ function recogeNombres(evt) {
 
 }
 
+function podio(){
+    let tabla = document.getElementById('tablaJugadores');
+    let tbody = tabla.querySelector('tbody');
+    let jugadores = JSON.parse(sessionStorage.getItem('jugadoresTOP'));
+
+    if(sessionStorage['jugadoresTOP']){
+        for (let i = 0; i < jugadores.length; i++) {
+            let jugador = jugadores[i];
+            
+            let fila = document.createElement('tr');
+            
+            let celdaPosicion = document.createElement('td');
+            celdaPosicion.textContent = i + 1;
+            fila.appendChild(celdaPosicion);
+            
+            let celdaNombre = document.createElement('td');
+            celdaNombre.textContent = jugador.Nombre;
+            fila.appendChild(celdaNombre);
+            
+            let celdaPuntos = document.createElement('td');
+            celdaPuntos.textContent = jugador.Puntos;
+            fila.appendChild(celdaPuntos);
+            
+            tbody.appendChild(fila);
+        }
+    }  
+}
+
+
 //Funcion para borrar el session
 function borraNombres(){
     sessionStorage.removeItem('_jugador1_');
     sessionStorage.removeItem('_jugador2_');
-    sessionStorage.removeItem('_partida_'); //TEMPORAL
-
+    sessionStorage.removeItem('_partida_');
 }
