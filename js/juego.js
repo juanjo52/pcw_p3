@@ -112,6 +112,8 @@ function partida(){
             }
             c++;
         });
+
+        sessionStorage['_numero_'] = null;
     }
     else{
         // recogerTablero();
@@ -281,34 +283,152 @@ function prepararCanvas() {
     // recogerTablero();
 }
 
-function ponerEventos() {
-    let cv = document.querySelector('#cv01');
+function pasarPortablero(){
 
-    // cv.addEventListener('mousemove', function(evt){ // Para cuando el ratón esté por encima...
-    cv.addEventListener('click', function(evt){ // Para cuando se pulsa en la celda...
+    let cv = document.querySelector('#cv01');
+    let coordenadasAnteriores = null;
+    
+    cv.addEventListener('mousemove', function(evt) {
         let x = evt.offsetX,
             y = evt.offsetY,
             altoCelda = ALTO / 4,
             anchoCelda = ANCHO / 4,
-            fila,col;
+            fila = Math.floor(y / altoCelda),
+            col = Math.floor(x / anchoCelda);
 
-        fila = Math.floor(y / altoCelda);
-        col = Math.floor(x / anchoCelda);
+        let tablero = JSON.parse(sessionStorage['_partida_']).Tablero;
+        let numeroSeleccionado = JSON.parse(sessionStorage['_numero_']);
 
-        let nPintar = JSON.parse(sessionStorage['_numero_']).Numero;
-        let t = JSON.parse(sessionStorage['_partida_']).Tablero; 
-        let cont = 0; 
+        if (numeroSeleccionado != null) {
+            if (tablero[fila][col] === 0) {
+                cv.style.cursor = 'pointer';
+            } else {
+                cv.style.cursor = 'not-allowed';
+            }
+        } else {
+            cv.style.cursor = 'not-allowed';
+            
+        }
+
+        const ctx = cv.getContext('2d');
+        borrarHover(coordenadasAnteriores);
+
+        if (!cv.style.cursor.includes('not-allowed')) {
+            ctx.fillStyle = 'green';
+
+            ctx.fillRect(
+                col * anchoCelda,
+                fila * altoCelda,
+                anchoCelda,
+                altoCelda
+            );
+            ctx.stroke();
+
+            coordenadasAnteriores = { X: fila, Y: col };
+        } else {
+            coordenadasAnteriores = null;
+        }
+    });
+
+
+    cv.addEventListener('mouseout',function(evt){
+
+        cv.width = cv.width; 
+        divisiones();
+
+        let t = JSON.parse(sessionStorage['_partida_']).Tablero;
+        let c = 0;
+        let p = 0;
 
         t.forEach(function(e){
+
             for(let i = 0; i < e.length;i++){
-                if(cont == fila && i == col){
-                    pintarNumeros(nPintar,fila,col);
+                if(e[i] === -1){
+                    p = i;
+                    pintarPosiciones(c,p);
+
+                }else if(t[c][i] != 0){
+                    console.log('hola');
+                    pintarNumeros2(e[i],c,i);
                 }
             }
-            cont++;
+            c++;
         });
+    });
+}
+
+function borrarHover(coordenadasAnteriores) {
+    let altoCelda = ALTO / 4,
+        anchoCelda = ANCHO / 4;
+
+    if (coordenadasAnteriores != null) {
+
+        let cv = document.querySelector('#cv01');
+        const ctx = cv.getContext('2d');
+        ctx.clearRect(
+            coordenadasAnteriores.Y * anchoCelda,
+            coordenadasAnteriores.X * altoCelda,
+            anchoCelda,
+            altoCelda
+        );
+
+        cv.width = cv.width; 
+        divisiones();
+
+        let t = JSON.parse(sessionStorage['_partida_']).Tablero;
+        let c = 0;
+        let p = 0;
+
+        t.forEach(function(e){
+
+            for(let i = 0; i < e.length;i++){
+                if(e[i] === -1){
+                    p = i;
+                    pintarPosiciones(c,p);
+
+                }else if(t[c][i] != 0){
+                    console.log('hola');
+                    pintarNumeros2(e[i],c,i);
+                }
+            }
+            c++;
+        });
+    }
+}
+
+function ponerEventos() {
+
+    let cv = document.querySelector('#cv01');
+
+    cv.addEventListener('click', function(evt){ // Para cuando se pulsa en la celda...
+        
+        if (!cv.style.cursor.includes('not-allowed')){
+            let x = evt.offsetX,
+                y = evt.offsetY,
+                altoCelda = ALTO / 4,
+                anchoCelda = ANCHO / 4,
+                fila,col;
+
+            fila = Math.floor(y / altoCelda);
+            col = Math.floor(x / anchoCelda);
+            
+            let nPintar = JSON.parse(sessionStorage['_numero_']).Numero;
+            let t = JSON.parse(sessionStorage['_partida_']).Tablero; 
+            let cont = 0; 
+
+            t.forEach(function(e){
+                for(let i = 0; i < e.length;i++){
+                    if(cont == fila && i == col){
+                        pintarNumeros(nPintar,fila,col);
+                    }
+                }
+                cont++;
+            });
+        }
         
     });
+    
+    // cv.addEventListener('mousemove', function(evt){ // Para cuando el ratón esté por encima...
 }
 
 function pintarNumeros(num,fil,col){
