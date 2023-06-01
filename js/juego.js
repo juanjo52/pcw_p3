@@ -91,27 +91,29 @@ function partida(){
             document.getElementById('numero3').disabled = true; 
         }
 
-        let t = JSON.parse(sessionStorage['_partida_']).Tablero;
+        pintarCanvas();
 
-        console.log(t);
+        // let t = JSON.parse(sessionStorage['_partida_']).Tablero;
 
-        let c = 0;
-        let p = 0;
+        // console.log(t);
 
-        t.forEach(function(e){
+        // let c = 0;
+        // let p = 0;
 
-            for(let i = 0; i < e.length;i++){
-                if(e[i] === -1){
-                    p = i;
-                    pintarPosiciones(c,p);
+        // t.forEach(function(e){
 
-                }else if(t[c][i] != 0){
-                    console.log('hola');
-                    pintarNumeros2(e[i],c,i);
-                }
-            }
-            c++;
-        });
+        //     for(let i = 0; i < e.length;i++){
+        //         if(e[i] === -1){
+        //             p = i;
+        //             pintarPosiciones(c,p);
+
+        //         }else if(t[c][i] != 0){
+        //             console.log('hola');
+        //             pintarNumeros2(e[i],c,i);
+        //         }
+        //     }
+        //     c++;
+        // });
 
         sessionStorage['_numero_'] = null;
     }
@@ -333,27 +335,10 @@ function pasarPortablero(){
 
     cv.addEventListener('mouseout',function(evt){
 
+        // esto se puede modular
         cv.width = cv.width; 
         divisiones();
-
-        let t = JSON.parse(sessionStorage['_partida_']).Tablero;
-        let c = 0;
-        let p = 0;
-
-        t.forEach(function(e){
-
-            for(let i = 0; i < e.length;i++){
-                if(e[i] === -1){
-                    p = i;
-                    pintarPosiciones(c,p);
-
-                }else if(t[c][i] != 0){
-                    console.log('hola');
-                    pintarNumeros2(e[i],c,i);
-                }
-            }
-            c++;
-        });
+        pintarCanvas();
     });
 }
 
@@ -374,8 +359,15 @@ function borrarHover(coordenadasAnteriores) {
 
         cv.width = cv.width; 
         divisiones();
+        pintarCanvas();
 
-        let t = JSON.parse(sessionStorage['_partida_']).Tablero;
+        
+    }
+}
+
+function pintarCanvas(){
+
+    let t = JSON.parse(sessionStorage['_partida_']).Tablero;
         let c = 0;
         let p = 0;
 
@@ -393,7 +385,6 @@ function borrarHover(coordenadasAnteriores) {
             }
             c++;
         });
-    }
 }
 
 function ponerEventos() {
