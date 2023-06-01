@@ -23,15 +23,9 @@ function estadoPartida() {
     var n = [];
     var tablero = [];
 
-    console.log("------------------------------------------");
-    console.log("------------------------------------------");
-    console.log(b1);
-
     n.push(b1);
     n.push(b2);
     n.push(b3);
-
-    console.log(n);
 
     if (sessionStorage['_partida_'] == null) {
 
@@ -56,9 +50,6 @@ function partida(){
 
     if(sessionStorage['_partida_'] != null){
 
-        console.log("pito pito");
-        // console.log(recogerTablero());
-
         document.getElementById('TablaJ1').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador1;
         document.getElementById('TablaJ2').innerHTML = JSON.parse(sessionStorage['_partida_']).Jugador2;
 
@@ -70,9 +61,6 @@ function partida(){
             document.getElementById('TurnoJ1').innerHTML = "";
             document.getElementById('TurnoJ2').innerHTML = "*";
         }
-
-        console.log("------------------------------------------");
-        console.log(JSON.parse(sessionStorage['_partida_']).Numeros[0]);
 
         document.getElementById('numero1').innerHTML = JSON.parse(sessionStorage['_partida_']).Numeros[0];
         document.getElementById("numero2").innerHTML = JSON.parse(sessionStorage['_partida_']).Numeros[1];
@@ -93,28 +81,6 @@ function partida(){
 
         pintarCanvas();
 
-        // let t = JSON.parse(sessionStorage['_partida_']).Tablero;
-
-        // console.log(t);
-
-        // let c = 0;
-        // let p = 0;
-
-        // t.forEach(function(e){
-
-        //     for(let i = 0; i < e.length;i++){
-        //         if(e[i] === -1){
-        //             p = i;
-        //             pintarPosiciones(c,p);
-
-        //         }else if(t[c][i] != 0){
-        //             console.log('hola');
-        //             pintarNumeros2(e[i],c,i);
-        //         }
-        //     }
-        //     c++;
-        // });
-
         sessionStorage['_numero_'] = null;
     }
     else{
@@ -132,7 +98,6 @@ function partida(){
                 response.json().then(function(datos){
                     datos.TABLERO.forEach(function(e){
 
-                        console.log(e);
                         for(let i = 0; i < e.length ; i++){
 
                             if(e[i] === -1){
@@ -161,16 +126,13 @@ function partida(){
 }
 
 function actualizarTableroEnPartida(nuevoTablero) {
+
     let partida = JSON.parse(sessionStorage['_partida_']);
     partida.Tablero = nuevoTablero;
-    console.log(partida);
     sessionStorage['_partida_'] = JSON.stringify(partida);
 }
 
 function modalPrimerTurno(jugador){
-
-    console.log('aqui no se mete');
-
 
     let dialogo = document.createElement('dialog');
 
@@ -195,12 +157,10 @@ function completarTabla(){
 
     let turnoj1 = 0;
     let jugadorInicial;
-
     var random = Math.floor(Math.random() * 2);
-    console.log(random);
+
     random == turnoj1 ? jugadorInicial = JSON.parse(sessionStorage['_jugador1_']).Jugador1 : jugadorInicial = JSON.parse(sessionStorage['_jugador2_']).Jugador2;
 
-    console.log(sessionStorage['_jugador1_']);
     document.getElementById('TablaJ1').innerHTML = JSON.parse(sessionStorage['_jugador1_']).Jugador1;
     document.getElementById('TablaJ2').innerHTML = JSON.parse(sessionStorage['_jugador2_']).Jugador2;
 
@@ -233,8 +193,6 @@ function generarNumerosAleatorios() {
         partida.Numeros[2] = numeros[2];
         sessionStorage.setItem('_partida_', JSON.stringify(partida));
     }
-
-    console.log(numeros);
 }
 
 function selctNumero(evt){
@@ -379,7 +337,6 @@ function pintarCanvas(){
                     pintarPosiciones(c,p);
 
                 }else if(t[c][i] != 0){
-                    console.log('hola');
                     pintarNumeros2(e[i],c,i);
                 }
             }
@@ -418,13 +375,9 @@ function ponerEventos() {
         }
         
     });
-    
-    // cv.addEventListener('mousemove', function(evt){ // Para cuando el ratón esté por encima...
 }
 
 function pintarNumeros(num,fil,col){
-
-    console.log(`El numero a pintar es ${num}; en la pos --> ${fil}, ${col} `);
 
     const canvas = document.getElementById("cv01");
     const ctx = canvas.getContext("2d");
@@ -442,11 +395,8 @@ function pintarNumeros(num,fil,col){
 
         t.forEach(function(e){
             for(let i = 0; i < e.length;i++){
-
                 if(cont == fil && i == col){
-
                     if(e[i]!=-1){
-                        console.log('entra1')
                         if(e[i] == 0){
                             t[cont][i] = num;
                             ctx.fillText(num, col*altoCelda + altoCelda/2 -13,fil*anchoCelda + anchoCelda/2 +17);
@@ -499,8 +449,6 @@ function pintarNumeros(num,fil,col){
 
 function pintarNumeros2(num,fil,col){
 
-    console.log(`El numero a pintar es ${num}; en la pos --> ${fil}, ${col} `);
-
     const canvas = document.getElementById("cv01");
     const ctx = canvas.getContext("2d");
     ctx.font = "48px Arial"; // Establece el tamaño y la fuente del texto
@@ -520,8 +468,6 @@ function pintarNumeros2(num,fil,col){
 
                     ctx.fillText(num, col*altoCelda + altoCelda/2 -13,fil*anchoCelda + anchoCelda/2 +17);
                     ctx.stroke();
-                    console.log('entra')
-
                 }
             }
             cont++;
@@ -531,8 +477,6 @@ function pintarNumeros2(num,fil,col){
 function pintarPosiciones(posX,posY){
 
     const cv = document.querySelector('#cv01');
-
-    console.log('Fila-->'+ posX + ' Columna-->'+posY);
 
     let altoCelda = ALTO / 4;
     let anchoCelda = ANCHO / 4;
