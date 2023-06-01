@@ -1,5 +1,7 @@
 // Función para recoger nombres de los jugadores 
-function recogeNombres() {
+function recogeNombres(evt) {
+    evt.preventDefault();
+    
     let j1 = document.getElementById('jugador1').value;
     let j2 = document.getElementById('jugador2').value;
 
@@ -16,7 +18,7 @@ function recogeNombres() {
 
         window.location.replace("./juego.html");
     } else {
-        msgError.textContent = "Tienes que introducir dos jugadores, para poder jugar";
+        msgError.textContent = "Tienes que introducir dos jugadores para poder jugar";
     }
 
     
