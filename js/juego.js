@@ -447,7 +447,33 @@ function pintarNumeros(num,fil,col){
 
                 if(r.CELDAS_SUMA == ''){
                     actualizarTurno(JSON.parse(sessionStorage['_partida_']).Turno);
-                }else{
+                }else if(r.CELDAS_SUMA == '' && r.JUGABLES == 0){
+                    console.log('asdff')
+                    let p = JSON.parse(sessionStorage.getItem('_partida_'));
+
+                    let sj1 = parseInt(p.Puntos1);
+                    let sj2 = parseInt(p.Puntos2);
+                    let ganador,puntosGanador; 
+
+                    if(sj1 > sj2){
+
+                        ganador = JSON.parse(sessionStorage['_jugador1_']).Jugador1
+                        puntosGanador = sj1;
+                    }else{
+                        ganador = JSON.parse(sessionStorage['_jugador2_']).Jugador2; 
+                        puntosGanador = sj2;
+                    }
+
+                    let dialogo = document.createElement('dialog');
+
+                    dialogo.innerHTML =
+                   '<h3>¡FIN DE PARTIDA!</h3>'+
+                   `<p>El ganador de la partida es --> ${ganador} con una puntuación de ${puntosGanador}</p>`
+
+                    document.body.appendChild(dialogo);
+                    dialogo.showModal();
+                }
+                else{
                     
                     let combos = r.CELDAS_SUMA.map(JSON.parse);
                     
