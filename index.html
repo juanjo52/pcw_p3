@@ -9,6 +9,7 @@
     <!-- <link rel="stylesheet" href="cssfont/fontello.css">  -->
     <link rel="stylesheet" href="./css/jugadores.css">
     <link rel="stylesheet" href="./css/index.css">
+    
     <!-- en css salta advertencia -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Rajdhani&display=swap');
@@ -19,7 +20,7 @@
     <header class="header">
         <!-- Aquí va el logo, el títuloy  el slogan de la página -->
         <a href="">
-            <img src="./imgs/nano_oliendo.jpg" alt="Imagen de cabecera">
+            <img src="./imgs/foto-removebg-preview.png" alt="Imagen de cabecera">
         </a>
         <h1>NumTris</h1>
         <h2>Consigue sumar el mayor número de múltiplos de 5 para ganar</h2>
@@ -28,9 +29,8 @@
     <nav id="menuNavJuego">
         <label>Introduce los nombres de los jugadores para jugar</label>
     </nav>
-
     <div class="container">
-        <div class="section">
+        <div class="left-section">
             <h2 class="tituloNegro">Top 10 puntuaciones de hoy</h2>
             <hr>
             <table id="tablaJugadores">
@@ -42,9 +42,10 @@
                   </tr>
                 </thead>
                 <tbody></tbody>
-              </table>
+            </table>
         </div>
-        <div class="section">
+
+        <div class="right-section">
             <h2 class="tituloNegro">Jugadores</h2>
             <hr>
             <form class="form">
@@ -60,10 +61,9 @@
             </form>
             
             <span id="msgError" class="error"></span>
-        </div>
-    </div>
-    
+      </div>
 
+    </div>
     <footer>
         <span class="f3"><a href="./acerca.html">&copy; Practica 3 PCW - 2023 -  Acerca</a></span>
     </footer>

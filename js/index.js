@@ -1,3 +1,9 @@
+(function(){
+    if(sessionStorage['_partida_']){
+        location.href = 'juego.html';
+    }
+})();
+
 // Función para recoger nombres de los jugadores 
 function recogeNombres(evt) {
     evt.preventDefault();
@@ -50,7 +56,14 @@ function podio(){
             
             tbody.appendChild(fila);
         }
-    }  
+    }else{
+        let fila = document.createElement('tr');
+        let celdaMensaje = document.createElement('td');
+        celdaMensaje.setAttribute('colspan', '3');
+        celdaMensaje.textContent = 'Todavía no hay puntuaciones guardadas. ¡¡¡ Sé el primero en conseguir una puntuación máxima !!!';
+        fila.appendChild(celdaMensaje);
+        tbody.appendChild(fila);
+    }
 }
 
 
@@ -58,5 +71,5 @@ function podio(){
 function borraNombres(){
     sessionStorage.removeItem('_jugador1_');
     sessionStorage.removeItem('_jugador2_');
-    sessionStorage.removeItem('_partida_');
+    
 }

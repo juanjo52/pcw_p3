@@ -182,3 +182,10 @@ body > nav {
 input:hover,textarea:hover{
     background-color: #CEDC00;
 }
+
+.left-section, .right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }

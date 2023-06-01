@@ -1,11 +1,14 @@
+div > h2{
 
+  color: #000;
+}
 .container {
     display: flex;
 }
 
 .left-section {
     flex: 1;
-    background-color: aqua;
+    background-color: lightgreen;
     text-align: center;
   }
 

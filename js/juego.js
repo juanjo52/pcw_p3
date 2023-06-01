@@ -535,6 +535,16 @@ function pintarNumeros(num,fil,col){
     }
 }
 
+function exit(){
+
+    sessionStorage.removeItem('_jugador1_');
+    sessionStorage.removeItem('_jugador2_');
+    sessionStorage.removeItem('_partida_');
+    sessionStorage.removeItem('_numero_');
+
+    window.location.replace('./index.html')
+}
+
 
 function finDeJuego(ganador,puntosGanador){
 
@@ -558,6 +568,7 @@ function finDeJuego(ganador,puntosGanador){
         sessionStorage.setItem('jugadoresTOP', JSON.stringify(jugadores));
     }
 
+    sessionStorage.removeItem('_partida_');
     
     const urlParam = new URLSearchParams(window.location.search);
     const z = urlParam.get('id');
