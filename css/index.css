@@ -10,6 +10,14 @@ body{
 
 }
 
+.botonera > input {
+    border: solid 1px black;
+    border-radius: 10%;
+    padding: 15px;
+    background-color: rgb(90, 212, 50);
+    
+}
+
 body > header{
     background-color: #00352F;
     padding: .5em;
