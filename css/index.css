@@ -54,6 +54,10 @@ body > nav {
     top: 0;
 }
 
+.error {
+    color: red;
+}
+
 
 /* MEDIA QUERIES */
 
