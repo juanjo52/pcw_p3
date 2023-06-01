@@ -445,10 +445,8 @@ function pintarNumeros(num,fil,col){
             console.log(r);
             if (r.RESULTADO == 'OK') {
 
-                if(r.CELDAS_SUMA == ''){
-                    actualizarTurno(JSON.parse(sessionStorage['_partida_']).Turno);
-                }else if(r.CELDAS_SUMA == '' && r.JUGABLES == 0){
-                    console.log('asdff')
+                if(r.CELDAS_SUMA.length == 0 && r.JUGABLES == 0){
+
                     let p = JSON.parse(sessionStorage.getItem('_partida_'));
 
                     let sj1 = parseInt(p.Puntos1);
@@ -468,12 +466,16 @@ function pintarNumeros(num,fil,col){
 
                     dialogo.innerHTML =
                    '<h3>¡FIN DE PARTIDA!</h3>'+
-                   `<p>El ganador de la partida es --> ${ganador} con una puntuación de ${puntosGanador}</p>`
-
+                   `<p>El ganador de la partida es --> ${ganador} con una puntuación de ${puntosGanador}</p>`+
+                   '<button onclick="cerrarDialogo()">Cerrar</button>';
                     document.body.appendChild(dialogo);
                     dialogo.showModal();
                 }
-                else{
+                if(r.CELDAS_SUMA == ''){
+
+                    actualizarTurno(JSON.parse(sessionStorage['_partida_']).Turno);
+                }
+                if(r.CELDAS_SUMA.length != 0){
                     
                     let combos = r.CELDAS_SUMA.map(JSON.parse);
                     
