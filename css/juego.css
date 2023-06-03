@@ -8,13 +8,13 @@ div > h2{
 
 .left-section {
     flex: 1;
-    background-color: lightgreen;
+    background-color: white;
     text-align: center;
   }
 
   .right-section {
     flex: 1;
-    background-color: lightgreen;
+    background-color: white;
     text-align: center;
   }
 
@@ -40,7 +40,7 @@ th, td {
     margin-top: 25px;
     margin-bottom: 100px;
     border:1px solid #000;
-    background-color: yellow;
+    background-color: rgb(42, 75, 4);
     
 }
 

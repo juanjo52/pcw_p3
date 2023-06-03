@@ -285,7 +285,7 @@ function pasarPortablero(){
         borrarHover(coordenadasAnteriores);
 
         if (!cv.style.cursor.includes('not-allowed')) {
-            ctx.fillStyle = 'green';
+            ctx.fillStyle = 'rgb(132, 228, 22)';
 
             ctx.fillRect(
                 col * anchoCelda,
@@ -393,7 +393,7 @@ function pintarNumeros(num,fil,col){
     const canvas = document.getElementById("cv01");
     const ctx = canvas.getContext("2d");
     ctx.font = "48px Arial"; // Establece el tamaño y la fuente del texto
-    ctx.fillStyle = "black"; // Establece el color de relleno del texto
+    ctx.fillStyle = "white"; // Establece el color de relleno del texto
 
     let altoCelda = ALTO / 4;
     let anchoCelda = ANCHO / 4;
@@ -631,7 +631,7 @@ function pintarNumeros2(num,fil,col){
     const canvas = document.getElementById("cv01");
     const ctx = canvas.getContext("2d");
     ctx.font = "48px Arial"; // Establece el tamaño y la fuente del texto
-    ctx.fillStyle = "black"; // Establece el color de relleno del texto
+    ctx.fillStyle = "white"; // Establece el color de relleno del texto
 
     let altoCelda = ALTO / 4;
     let anchoCelda = ANCHO / 4;

@@ -250,7 +250,12 @@ hr {
 }
 
 
-
+.left-section, .right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 /* MEDIA QUERIES */
 
 /* Tamaño pequeño*/

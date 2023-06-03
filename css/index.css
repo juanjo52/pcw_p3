@@ -56,8 +56,8 @@ body > footer{
 
 body > nav {
     z-index: 999;
-    background-color: #CEDC00;
-
+    background-color: #00594F;
+    color: #FFFFFF;
     position: sticky;
     top: 0;
 }
@@ -183,9 +183,9 @@ input:hover,textarea:hover{
     background-color: #CEDC00;
 }
 
-.left-section, .right-section {
+/* .left-section, .right-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
+  } */
